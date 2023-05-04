@@ -1,0 +1,7 @@
+@startuml
+start
+    :set width to n;
+    :set fill to character;
+    :print empty string;
+end
+@enduml
