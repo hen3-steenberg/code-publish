@@ -16,13 +16,14 @@ An [example pdf](./testassignment/publish/TestAssignment.pdf) is generated for t
 3. Insert the content from any (.tex .latex) files
 4. Render plantuml diagrams from (.puml .plantuml) files
 5. Render `pgf` plots (.pgf) into the pdf as a vector graphic.
-6. Creates captions based on file or folder names
+6. Include content from `.csv` files as tables.
+7. Creates captions based on file or folder names
     * strips numbers in the format `[xxx]` from the front of file names
-7. Creates a document structure based on the the folder structure
+8. Creates a document structure based on the the folder structure
     * renders content in lexical order (prepend numbers to files and folders in the format `[xxx]` to control the rendering order.)
-8. Skip publishing any files in `skip.txt`
-9. Publish only files in the order that they appear in `publish.txt`
-    * If there is a `publish.txt` file, the behaviour for 6., 7. and 8. is ignored.
+9. Skip publishing any files in `skip.txt`
+10. Publish only files in the order that they appear in `publish.txt`
+    * If there is a `publish.txt` file, the behaviour for 7., 8. and 9. is ignored.
 
 ## Usage
 * Copy the script into your project
@@ -60,7 +61,18 @@ At the top of the `codepuplish.py` file a lot of variables are declared which de
     ```
 * `packages` A list of latex packages that should be included with the `\usepackage` statement
     ```python
-    packages = ["{fancyvrb}", "{color}", "[utf8]{inputenc}", "[breakable]{tcolorbox}", "[a4paper, portrait, margin=2cm]{geometry}", "{pgf}", "{float}"]
+    packages = [
+        "{fancyvrb}", 
+        "{color}", 
+        "[utf8]{inputenc}", 
+        "[breakable]{tcolorbox}", 
+        "[a4paper, portrait, margin=2cm]{geometry}", 
+        "{pgf}", 
+        "{float}", 
+        "{amsmath}",
+        "{amssymb}",
+        "{csvsimple}",
+        "{booktabs}"]
     ```
 * `doc_class` the document class to use
     ```python
@@ -100,4 +112,8 @@ At the top of the `codepuplish.py` file a lot of variables are declared which de
 * `figure_extensions` A list of file extensions that should be interpreted as figures 
     ```python
     figure_extensions = [".pgf"]
+    ```
+* `figure_extensions` A list of file extensions that should be interpreted as tables
+    ```python
+    table_extensions = [".csv"]
     ```

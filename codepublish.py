@@ -36,6 +36,10 @@ packages = [
     "[a4paper, portrait, margin=2cm]{geometry}",
     "{pgf}",
     "{float}",
+    "{amsmath}",
+    "{amssymb}",
+    "{csvsimple}",
+    "{booktabs}",
 ]
 """latex packages used by the document"""
 
@@ -70,6 +74,8 @@ diagram_extensions = [".puml", ".plantuml"]
 
 figure_extensions = [".pgf"]
 """Added as an included figure"""
+
+table_extensions = [".csv"]
 
 
 def document_class() -> str:
@@ -211,6 +217,11 @@ def publish_figure(filename: str) -> str:
     return f"\\begin{{figure}}[H]\n\\centering\n\\input{{{abspath(filename)}}}\n\\caption{{{title}}}\n\\end{{figure}}"
 
 
+def publish_table(filename: str) -> str:
+    title = remove_number_and_extension(filename)
+    return f'\\begin{{figure}}[H]\n\\centering\n\\caption{{{title}}}\n\\csvautobooktabular{{"{abspath(filename)}"}}\n\\end{{figure}}'
+
+
 def import_document(filename: str) -> str:
     """
     process an import file
@@ -244,6 +255,8 @@ def publish_item(path: str, level: int) -> Iterator[str]:
         yield publish_output(path)
     elif extension_match(path, figure_extensions):
         yield publish_figure(path)
+    elif extension_match(path, table_extensions):
+        yield publish_table(path)
     elif isdir(path):
         for content in publish_folder(path, level + 1):
             yield content
